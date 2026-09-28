@@ -70,7 +70,7 @@
 
 <script>(function(){
 "use strict";
-const DEFAULT_URL="https://script.google.com/macros/s/AKfycbzfcDBURzGdE_7Z3I_FWhHFHAHOOj15RtlUPFm9AIaQVfyyITWPoF7hUKpH7Z0rLICV/exec";   // filled in by build.py once the Ledger script is deployed
+const DEFAULT_URL="https://script.google.com/macros/s/AKfycby1jba1ngVDe2X2hZnre7F-G6MGjYVBYSf21GYIlAQp1NtALONbqfCx2KslGX6NgTXT/exec";   // filled in by build.py once the Ledger script is deployed
 const VERSION="Ledger v4";
 const CATS=["Travel","Printing & Stationery","Software & Tools","Food","Venue & Events","Founder pay","Salaries & Retainers","Marketing & PR","Legal & Compliance","Hardware","Other"];
 const CAT_C={"Travel":"#244570","Printing & Stationery":"#E85B25","Software & Tools":"#5B8BC9","Food":"#2E9A5A","Venue & Events":"#B97A06","Founder pay":"#1B3556","Salaries & Retainers":"#2B2F36","Marketing & PR":"#C2477A","Legal & Compliance":"#7A5AA6","Hardware":"#3E8C8C","Other":"#8A97AB"};
@@ -134,7 +134,7 @@ const VIEWS=[["overview","Overview"],["expenses","Expenses"],["budget","Budget"]
 function ls(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||"null");if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
 let cfg=ls("ld.cfg")||{};
 (function(){const m=location.hash.match(/api=([^&]+)/);if(m){cfg.url=decodeURIComponent(m[1]);ls("ld.cfg",cfg);history.replaceState(null,"",location.pathname+location.search)}})();
-if(DEFAULT_URL&&!cfg.url) cfg.url=DEFAULT_URL;
+if(DEFAULT_URL&&(!cfg.url||cfg.base!==DEFAULT_URL)){cfg={url:DEFAULT_URL,base:DEFAULT_URL,who:cfg.who};ls("ld.cfg",cfg);try{localStorage.removeItem("ld.data");localStorage.removeItem("ld.queue")}catch(e){}}
 let data=ls("ld.data")||{expenses:[],budget:[],projects:[],imports:[],sources:[]};
 if(!data.projects) data.projects=[];
 let queue=ls("ld.queue")||[];
@@ -687,7 +687,7 @@ function changePass(){
   $("#pS").onclick=async()=>{const a=$("#p1").value,b=$("#p2").value;if(a.length<6)return toast("Use at least 6 characters");if(a!==b)return toast("They don't match");
     try{const r=await api("change",{newPass:a});if(!r.ok)throw new Error(r.error);cfg.pass=a;ls("ld.cfg",cfg);closeSheet();toast("Passcode changed")}catch(e){toast(e.message||"Offline")}};
 }
-function signOut(forced){cfg={url:cfg.url,who:cfg.who};ls("ld.cfg",cfg);showSetup();if(forced)$("#setupErr").textContent="Please sign in again."}
+function signOut(forced){cfg={url:cfg.url,base:cfg.base,who:cfg.who};ls("ld.cfg",cfg);showSetup();if(forced)$("#setupErr").textContent="Please sign in again."}
 
 /* ---------- export ---------- */
 function exportList(){return scoped().slice().sort((a,b)=>a.date.localeCompare(b.date))}
@@ -878,7 +878,7 @@ function showSetup(){
   if(cfg.who&&cfg.url) pick(cfg.who);
 }
 async function pick(w){
-  cfg.who=w; ls("ld.cfg",{url:cfg.url,who:w});
+  cfg.who=w; ls("ld.cfg",{url:cfg.url,base:cfg.base,who:w});
   document.querySelectorAll("#whoSeg button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.who===w));
   const u=$("#apiUrl").value.trim(); if(u) cfg.url=u;
   if(!cfg.url){$("#urlBox").hidden=false;$("#setupErr").textContent="Paste the Ledger link first.";return}
@@ -895,7 +895,7 @@ async function pick(w){
   }catch(e){ if(my!==pickSeq) return; $("#setupWait").hidden=true; $("#urlBox").hidden=false; $("#setupErr").textContent="Can't reach Ledger. Check the link and your connection."; }
 }
 document.querySelectorAll("#whoSeg button").forEach(b=>b.onclick=()=>pick(b.dataset.who));
-$("#apiUrl").addEventListener("change",()=>{cfg.url=$("#apiUrl").value.trim();ls("ld.cfg",{url:cfg.url,who:cfg.who});if(cfg.who)pick(cfg.who)});
+$("#apiUrl").addEventListener("change",()=>{cfg.url=$("#apiUrl").value.trim();ls("ld.cfg",{url:cfg.url,base:cfg.base,who:cfg.who});if(cfg.who)pick(cfg.who)});
 $("#setupForm").onsubmit=async ev=>{
   ev.preventDefault(); const E=$("#setupErr"); E.textContent="";
   if(!cfg.who){E.textContent="Tap your name first.";return}
