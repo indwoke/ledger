@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Coverage demo</title><link rel="stylesheet" href="facilitator-note.css"></head>
+<body><div id="app"></div>
+<script src="../shared/cov_core.js"></script>
+<script src="coverage-list.js"></script>
+<script>
+  // Demo only: stands in for the cov.list API call, with rows as the coverage tab stores them.
+  var schools = [
+    { institute_code: 'MCGM-0007', status: 'ok', sessions_held: 1, second_session_due: '', parents: 34, parents_target: 30, fathers: 6, fathers_target: 5, teachers: 12, teachers_target: 10, grades: 4, grades_target: 3, score: 52.4, score_low: 46.1, score_high: 58.7, band: 'MODERATE', near_band_line: '' },
+    { institute_code: 'MCGM-0001', status: 'second_session_needed', sessions_held: 1, second_session_due: '2026-10-17', parents: 44, parents_target: 30, fathers: 4, fathers_target: 5, teachers: 9, teachers_target: 10, grades: 3, grades_target: 3, score: 61.8, score_low: 56.2, score_high: 67.4, band: 'MODERATE', near_band_line: 65 },
+    { institute_code: 'MCGM-0012', status: 'low_confidence', sessions_held: 2, second_session_due: '', parents: 3, parents_target: 30, fathers: 0, fathers_target: 5, teachers: 6, teachers_target: 6, grades: 1, grades_target: 3, score: '', score_low: '', score_high: '', band: '', near_band_line: '' }
+  ];
+  var lang = new URLSearchParams(location.search).get('lang') || 'en';
+  CoverageList.mount(document.getElementById('app'), { lang: lang, load: function () { return Promise.resolve({ schools: CovCore.sortForAction(schools) }); } });
+</script></body></html>

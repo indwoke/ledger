@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Facilitator note demo</title><link rel="stylesheet" href="facilitator-note.css"></head>
+<body>
+<div id="app"></div>
+<script src="../shared/fn_schema.js"></script>
+<script src="../shared/fn_core.js"></script>
+<script src="facilitator-note.js"></script>
+<script>
+  // Demo only: stands in for the app's queued API call.
+  window.__sent = [];
+  var lang = new URLSearchParams(location.search).get('lang') || 'en';
+  FacilitatorNote.mount(document.getElementById('app'), {
+    lang: lang,
+    session: { institute_code: 'MCGM-0001', session_date: '2026-10-03', template_id: 'praja-adult-v1' },
+    send: function (action, body) { window.__sent.push({ action: action, body: body }); },
+    fetchSiteMemory: function () { return Promise.resolve({ notes: [{ date: '2026-09-30', text: 'Hall gets noisy after 1 pm; start early.' }] }); }
+  });
+</script>
+</body></html>

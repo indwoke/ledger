@@ -1,0 +1,36 @@
+/* Facilitator Session Note: minimal styles. Swap colours for the app's own variables. */
+.fn-form { max-width: 640px; margin: 0 auto; padding: 12px 16px 48px; font: 16px/1.45 system-ui, sans-serif; }
+.fn-warn { background: #FFF4EC; border-left: 4px solid #E85B25; padding: 8px 12px; }
+.fn-section { border: 0; border-top: 2px solid #244570; margin: 20px 0 0; padding: 8px 0 0; }
+.fn-section legend { font-weight: 700; color: #244570; padding-right: 8px; }
+.fn-q { margin: 14px 0; }
+.fn-label { display: block; font-weight: 600; margin-bottom: 6px; }
+.fn-help { font-size: 14px; color: #555; margin: 0 0 6px; }
+.fn-options, .fn-scale { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.fn-opt { display: inline-flex; align-items: center; gap: 6px; border: 1px solid #C9D3DF; border-radius: 8px; padding: 8px 10px; min-height: 44px; }
+.fn-anchor { font-size: 13px; color: #555; }
+.fn-form input[type=number], .fn-form input[type=time], .fn-form input[type=text], .fn-form textarea { width: 100%; font: inherit; padding: 8px; border: 1px solid #C9D3DF; border-radius: 8px; box-sizing: border-box; }
+.fn-bad .fn-label { color: #B3261E; }
+.fn-err { color: #B3261E; font-size: 14px; margin: 4px 0 0; min-height: 0; }
+.fn-submit { margin-top: 20px; width: 100%; min-height: 48px; font: inherit; font-weight: 700; background: #244570; color: #fff; border: 0; border-radius: 10px; }
+.fn-submit:disabled { opacity: .5; }
+.fn-memory p { background: #EAF0F6; padding: 8px 10px; border-radius: 8px; }
+
+/* School coverage list */
+.cov-title { font: 700 20px/1.3 system-ui, sans-serif; color: #244570; margin: 12px 16px; }
+.cov-list { display: grid; gap: 10px; padding: 0 16px 32px; font: 15px/1.4 system-ui, sans-serif; }
+.cov-card { border: 1px solid #C9D3DF; border-left: 6px solid #9AA5B1; border-radius: 10px; padding: 10px 12px; }
+.cov-second_session_needed { border-left-color: #E85B25; }
+.cov-low_confidence { border-left-color: #C9A227; }
+.cov-ok { border-left-color: #2E7D5B; }
+.cov-head { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+.cov-status { font-size: 13px; font-weight: 700; color: #244570; }
+.cov-due { margin: 4px 0; color: #E85B25; font-weight: 600; }
+.cov-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 6px; }
+.cov-item { background: #EAF0F6; border-radius: 8px; padding: 6px; text-align: center; }
+.cov-short { background: #FFF4EC; }
+.cov-num { display: block; font-weight: 700; }
+.cov-lbl { display: block; font-size: 12px; color: #555; }
+.cov-score, .cov-near { margin: 6px 0 0; font-size: 14px; }
+.cov-near { color: #B3261E; }
+.cov-head strong { white-space: nowrap; }
